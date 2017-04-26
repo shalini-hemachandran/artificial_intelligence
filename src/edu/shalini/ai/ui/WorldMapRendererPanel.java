@@ -98,6 +98,7 @@ public class WorldMapRendererPanel extends JPanel implements MouseListener {
 
     @Override
     public void paintComponent(Graphics g) {
+        super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
         g2d.setStroke(new BasicStroke(1));
         final int radius = NODE_DIAMETER / 2;
