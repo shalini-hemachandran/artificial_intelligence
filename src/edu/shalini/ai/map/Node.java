@@ -4,6 +4,9 @@ import edu.shalini.ai.search.HScoreComputer;
 
 import java.util.*;
 
+/**
+ * Template class defining the node
+ */
 public class Node implements Comparable<Node> {
     private final String name;
     private final int x;

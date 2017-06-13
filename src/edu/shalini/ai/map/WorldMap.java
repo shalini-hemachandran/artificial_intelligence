@@ -3,6 +3,9 @@ package edu.shalini.ai.map;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
+/**
+ * Template class which contains nodes and edges
+ */
 public class WorldMap {
     private static final int MAX_RETRIES = 500;
     private static final double EDGE_DISTANCE_MULTIPLIER = 1.5;

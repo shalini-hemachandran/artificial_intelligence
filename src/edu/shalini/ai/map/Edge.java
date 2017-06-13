@@ -1,5 +1,8 @@
 package edu.shalini.ai.map;
 
+/**
+ * Template class defining te edge
+ */
 public class Edge {
     private final Node fromNode;
     private final Node toNode;

@@ -21,6 +21,9 @@ public class MainFrame extends JFrame {
     private JLabel numExpansionsLabel;
     private JLabel maxWaitingTimeLabel;
 
+    /**
+     * Instantiates the main frame which contains the map and user selections
+     */
     public MainFrame() {
         super();
 
@@ -30,12 +33,14 @@ public class MainFrame extends JFrame {
         numExpansionsLabel = new JLabel("");
         maxWaitingTimeLabel = new JLabel("");
 
+        //creates the map panel
         worldMapRendererPanel = new WorldMapRendererPanel(this);
         worldMapRendererPanel.replaceWorldMap(WorldMap.generateMap(MAX_NUMBER_OF_NODES, DEFAULT_MIN_DISTANCE,
                 Constants.WORLD_MAP_RENDER_PANEL_WIDTH - 1, Constants.WORLD_MAP_RENDER_PANEL_HEIGHT - 1));
 
         setLayout(new FlowLayout());
 
+        //creates the user selection panel
         final JPanel leftPanel = new JPanel();
 
         final JPanel generateMapPanel = new JPanel();
@@ -58,6 +63,10 @@ public class MainFrame extends JFrame {
         setSelectSourceNodeMode();
     }
 
+    /**
+     * creates options for user selection
+     * @return
+     */
     private JPanel createOptionsPanel() {
         final JPanel optionsPanel = new JPanel();
         optionsPanel.setLayout(new GridLayout(2, 2, 5, 10));
@@ -79,6 +88,11 @@ public class MainFrame extends JFrame {
         return optionsPanel;
     }
 
+    /**
+     * on clicking the Generate map button, the user's inputs of number of nodes are supplied to the map generator panel
+     * and a map is generated according to the inputs
+     * @return
+     */
     private JButton createGenerateMapButton() {
         final JButton generateMapButton = new JButton("Generate Map!");
 
@@ -128,6 +142,7 @@ public class MainFrame extends JFrame {
         simulatePanel.add(new JLabel("(3)"));
         simulatePanel.add(algoSelectorPanel);
 
+        //calls the required method to render the shortest pat once the simulate button is clicked
         simulateButton.addActionListener(e -> {
             worldMapRendererPanel.restoreWorldMap();
             try {

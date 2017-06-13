@@ -6,6 +6,9 @@ import edu.shalini.ai.map.WorldMap;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Computes the HScore based on the farthest target heuristic
+ */
 public class FarthestTargetHScoreComputer implements HScoreComputer {
     private final WorldMap worldMap;
 

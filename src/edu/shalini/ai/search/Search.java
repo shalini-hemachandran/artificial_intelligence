@@ -5,6 +5,9 @@ import edu.shalini.ai.map.Node;
 
 import java.util.*;
 
+/**
+ * Searches the graph to identify the shortest path computed based on the HScore selected by the user
+ */
 public class Search {
     public class Result {
         private final List<Node> shortestPath;
@@ -59,6 +62,13 @@ public class Search {
         return prefix.toString();
     }
 
+    /**
+     * Shoretst path computation
+     * @param sourceNode
+     * @param targetNodes
+     * @param computer
+     * @return
+     */
     public Result findShortestPath(final Node sourceNode, final Collection<Node> targetNodes,
                                    final HScoreComputer computer) {
         final String sourcePrefix = getPrefix(targetNodes);

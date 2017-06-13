@@ -13,6 +13,11 @@ import java.awt.event.MouseListener;
 import java.util.*;
 import java.util.List;
 
+/**
+ * This class serves to simulate a map. It render a set of clickable nodes connected by edges.
+ * Initially, a node that is clicked serves as the source node. The subsequent clicks on nodes
+ * makes them target nodes.
+ */
 public class WorldMapRendererPanel extends JPanel implements MouseListener {
     private static final int NODE_DIAMETER = 10;
     private static final Color NODE_COLOR = Color.BLACK;
@@ -29,6 +34,10 @@ public class WorldMapRendererPanel extends JPanel implements MouseListener {
     private Set<Node> expandedNodes;
     private final MainFrame parentFrame;
 
+    /**
+     * Panel instantiation
+     * @param parentFrame
+     */
     public WorldMapRendererPanel(final MainFrame parentFrame) {
         this.parentFrame = parentFrame;
         this.worldMap = WorldMap.createEmptyWorldMap();
@@ -61,10 +70,16 @@ public class WorldMapRendererPanel extends JPanel implements MouseListener {
         repaint();
     }
 
+    /**
+     * Higlights the optimal path identified by the 3 HScore Computers.
+     * @param algoIndex
+     * @return
+     */
     public Search.Result paintShortestPath(final int algoIndex) {
         worldMap.clearStates();
         final Search search = new Search();
 
+        //Initializes respective HScore Computer based on the user's selection.
         HScoreComputer computer;
         switch(algoIndex) {
             case 0:
@@ -85,17 +100,24 @@ public class WorldMapRendererPanel extends JPanel implements MouseListener {
             targetNodes.add(worldMap.getNodeByName(targetNodeName));
         }
 
+        //Shortest Path computation
         final Search.Result result = search.findShortestPath(worldMap.getNodeByName(sourceNodeName), targetNodes,
                 computer);
         this.shortestPath = new ArrayList<>(result.getShortestPath());
         this.shortestPathGScores = new ArrayList<>(result.getShortestPathGScores());
         this.expandedNodes = new HashSet<>(result.getExpandedNodes());
 
+        //shortest path highlighting
         repaint();
 
         return result;
     }
 
+    /**
+     * All types of node, edge, path formatting happens here.
+     * Source node is colored green, Target Nodes are colored red, Shortest path is highlighted in blue, Expanded nodes are colored orange
+     * @param g
+     */
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -151,6 +173,10 @@ public class WorldMapRendererPanel extends JPanel implements MouseListener {
         }
     }
 
+    /**
+     * Called when a node is clicked
+     * @param e
+     */
     @Override
     public void mouseClicked(MouseEvent e) {
         if (this.shortestPath.isEmpty()) {
@@ -160,6 +186,10 @@ public class WorldMapRendererPanel extends JPanel implements MouseListener {
         }
     }
 
+    /**
+     * Called initially once the source node is selected
+     * @param e
+     */
     private void handleInitialClicks(MouseEvent e) {
         final Node clickedNode = getClickedNode(e);
 
@@ -174,9 +204,16 @@ public class WorldMapRendererPanel extends JPanel implements MouseListener {
             }
         }
 
+        //Node coloring happens here
         repaint();
     }
 
+    /**
+     * Serves to handle node clicks after the shortest path is computed.
+     * Assuming a node in the shortest path is already reached, this method handles
+     * dynamic target node selection
+     * @param e
+     */
     private void handlePostClicks(MouseEvent e) {
         final Node clickedNode = getClickedNode(e);
         if (clickedNode != null) {
